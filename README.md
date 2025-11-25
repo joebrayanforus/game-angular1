@@ -217,3 +217,24 @@ Die Lösung ist korrekt, da sie:
 - **⋈** (Bowtie): Join - verbindet Relationen
 - **∩** (Cap): Schnittmenge - gemeinsame Tupel zweier Relationen
 - **|R|**: Kardinalität - Anzahl der Tupel in Relation R
+
+**Korrekte Lösungen (zwei Varianten):**
+
+Variante A (Umbenennung erst nach vollständiger Verknüpfung):
+```
+ρ_gaertnerei_nr→gaertnerei_id(
+  π_name,gaertnerei_nr(
+    σ_pflanzenname='Sonnenblume'(pflanze) ⋈ verkauft ⋈ gaertnerei
+  )
+)
+```
+
+Variante B (Theta-Join mit expliziter Bedingung nach Umbenennung):
+```
+π_name,gaertnerei_id(
+  (σ_pflanzenname='Sonnenblume'(pflanze) ⋈ verkauft)
+  ⋈_{gaertnerei_nr = gaertnerei_id}
+  (ρ_gaertnerei_nr→gaertnerei_id(gaertnerei))
+)
+```
+
